@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class Category extends Model
 {
     use HasFactory;
 
-    public function category()
+    public $timestamps = false;
+
+    public function projects()
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(Project::class);
     }
 }

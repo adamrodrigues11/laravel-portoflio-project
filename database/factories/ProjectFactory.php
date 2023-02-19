@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,8 +19,10 @@ class ProjectFactory extends Factory
     {
         $bodyArray = fake()->paragraphs(3);
         $body = '<p>' . join('</p><p>', $bodyArray) . '</p>';
+        $title = fake()->company() . ' ' . fake()->companySuffix();
         return [
-            'title' => fake()->company() . ' ' . fake()->companySuffix(),
+            'title' => $title,
+            'slug' => Str::slug($title, '-'),
             'excerpt' => fake()->catchPhrase(),
             'body' => $body,
         ];
