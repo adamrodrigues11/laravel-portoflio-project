@@ -24,5 +24,6 @@ Route::get('/about', function () {
 
 Route::get('/projects', [ProjectController::class, 'index']);
 
-Route::get('/projects/{project}', [ProjectController::class, 'show']);
+Route::get('/projects/{project:slug}', [ProjectController::class, 'show']);
 
+Route::get('/categories/{category:slug}', [ProjectController::class, 'listByCategory']);
