@@ -1,14 +1,24 @@
-@props(['project', 'showBody' => false])
+@props(['project', 'showBody' => false, 'showFullImg' => false])
 
 <div class="p-6  bg-white overflow-hidden shadow sm:rounded-lg">
     <div class="text-xl font-bold">
         <a href="/projects/{{ $project->slug }}">{{ $project->title }}</a>
     </div>
-    @if (!$showBody)
-        <div>{!! $project->excerpt !!}</div>
+    @if(!$showFullImg)
+    <div class="flex flex-row py-4">
+        {{-- thumbnail --}}
+        <img src="{{url('storage/images/download.jpeg')}}" alt="placeholder image" class="rounded shadow-md w-20 mx-4">
     @else
-        <div>{!! $project->body !!}</div>
+    <div class="flex flex-col gap-4 items-center py-4">
+        {{-- full image --}}
+        <img src="{{url('storage/images/download.jpeg')}}" alt="placeholder image" class="rounded shadow-md w-4/12">
     @endif
+        @if (!$showBody)
+            <div>{!! $project->excerpt !!}</div>
+        @else
+            <div>{!! $project->body !!}</div>
+        @endif
+    </div>
     <footer>
         @if ($project->category)
         <a href="/categories/{{ $project->category->slug }}">Category: {{ $project->category->name }}</a>
