@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class RegisterUserController extends Controller
 {
     public function create() {
-        return view('register_user.create');
+        return view('register_user.form')
+            ->with('user', null);
     }
 
     public function store(Request $request) {
@@ -20,9 +21,41 @@ class RegisterUserController extends Controller
 
         $user = User::create($attributes);
 
-        auth()->login($user);
+        // If the currently logged in user is admin, redirect to admin dashboard
+        if(auth()->user()?->isAdmin()) {
+            return redirect('/admin');
+        }
 
+        // Otherwise, log the newly created user in and redirect to home page
+        auth()->login($user);
         return redirect('/');
-            // ->with('success', 'Your account has been created.');
+    }
+
+    public function edit (User $user) {
+        return view('register_user.form', ['user' => $user]);
+    }
+
+    public function update (Request $request, User $user) {
+        $attributes = $request->validate([
+            'name' => 'required',
+            'email' => ['required', 'unique:users,email,'.$user->id],
+            'password' => ['required', 'min:8', 'confirmed']
+        ]);
+
+        $user->update($attributes);
+
+        // Set a flash message
+        session()->flash('success','User Updated Successfully');
+
+        return redirect('/admin');
+    }
+
+    public function destroy (User $user) {
+        $user->delete();
+
+        // Set a flash message
+        session()->flash('success','User Deleted Successfully');
+
+        return redirect('/admin');
     }
 }

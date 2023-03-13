@@ -71,7 +71,8 @@ class ProjectSeeder extends Seeder
             'slug' => 'industry-project',
             'excerpt' => fake()->sentences(2, true),
             'body' => $this->fakeHTMLParagraphs(6),
-            'category_id' => 3
+            'category_id' => 3,
+            'isFeatured' => true
         ]);
     }
 }
