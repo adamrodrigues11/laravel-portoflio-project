@@ -13,6 +13,7 @@
                 @endif
                 <a href="/logout" class="ml-3 text-xs font-bold uppercase">Logout</a>
             @else
+                <a href="/register" class="ml-3 text-xs font-bold uppercase">Register</a>
                 <a href="/login" class="ml-3 text-xs font-bold uppercase">Log In</a>
             @endauth
         </div>
